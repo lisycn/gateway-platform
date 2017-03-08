@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:osgi="http://www.springframework.org/schema/osgi"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd"
+       default-autowire="byName">
+
+    <!-- handler -->
+    <bean id="testHandler" class="com.yinrong.gateway.service.impl.testHandler" />
+    <bean id="abstractBusinessHandler" class="com.yinrong.gateway.service.impl.AbstractBusinessHandler" abstract="true">
+        <property name="accountSecurityLevelFlag" value="${account_security_level_flag}" />
+        <!--<property name="accountSecurityLevelFlag" value="1" />-->
+    </bean>
+    <!-- factory -->
+    <bean id="validatorFactory" class="com.yinrong.gateway.validator.factory.DefaultValidatorFactory" >
+        <property name="memberValidatorMap">
+            <map>
+                <entry key="CreatePersonalRequest" value-ref="createPersonalRequestValidator"/>
+
+            </map>
+        </property>
+    </bean>
+    <bean id="createPersonalMemberHandler" class="com.yinrong.gateway.service.impl.CreatePersonalMemberHandler" parent="abstractBusinessHandler" />
+    <!-- validator -->
+    <bean id="createPersonalRequestValidator" class="com.yinrong.gateway.validator.impl.CreatePersonalRequestValidator" />
+    <!-- security provider -->
+    <bean id="securityProvider" class="com.yinrong.gateway.service.impl.SecurityProviderImpl">
+        <property name="securityMap">
+            <map>
+                <entry key="MD5" value-ref="md5SecurityService"/>
+                <entry key="RSA" value-ref="rsaSecurityService"/>
+            </map>
+        </property>
+    </bean>
+
+    <!-- security service -->
+    <bean id="md5SecurityService" class="com.yinrong.gateway.service.impl.Md5SecurityServiceImpl" />
+    <bean id="rsaSecurityService" class="com.yinrong.gateway.service.impl.RsaSecurityServiceImpl" />
+
+    <bean id="authorizationClient" class="com.yinrong.gateway.mock.AuthorizationClientMockImpl" />
+    <bean id="md5Key" class="java.lang.String">
+        <constructor-arg>
+            <value>${md5.key}</value>
+        </constructor-arg>
+    </bean>
+
+    <bean id="merchantPublicKey" class="java.lang.String">
+        <constructor-arg>
+            <value>${merchant.public.key}</value>
+        </constructor-arg>
+    </bean>
+    <bean id="walletPrivateKey" class="java.lang.String">
+        <constructor-arg>
+            <value>${wallet.private.key}</value>
+        </constructor-arg>
+    </bean>
+</beans>

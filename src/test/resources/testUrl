@@ -1,0 +1,2 @@
+i.vfinance.cn:8080/gateway/service.do?service=test&_input_charset=utf-8&version=1.0&&partner_id=11&&sign=11&&sign_type=RSA
+i.vfinance.cn:8080/gateway/service.do?service=create_personal_member&_input_charset=utf-8&version=1.0&&partner_id=11&&sign=11&&sign_type=RSA

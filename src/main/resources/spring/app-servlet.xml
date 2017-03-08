@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context-3.0.xsd"
+       default-autowire="byName">
+
+    <bean id="dataFilter" class="com.yinrong.gateway.controller.RequestDataFilter" />
+
+    <bean id="baseReqValidator" class="com.yinrong.gateway.validator.BaseReqValidator" />
+
+    <bean name="/service.do" class="com.yinrong.gateway.controller.FrontendReqController">
+        <property name="securityProvider" ref="securityProvider" />
+        <property name="baseReqValidator" ref="baseReqValidator"  />
+        <property name="dataFilter" ref="dataFilter"  />
+        <property name="handeMap">
+            <map>
+                <entry key="test" value-ref="testHandler" />
+                <entry key="create_personal_member" value-ref="createPersonalMemberHandler" />
+                <!-- 				<entry key="create_activate_personal_member" value-ref="createActivatePersonalMemberHandler" /> -->
+                <!--<entry key="create_enterprise_member" value-ref="createEnterpriseMemberHandler" />-->
+                <!--<entry key="auto_activate_member" value-ref="autoActivateMemberHandler" />-->
+                <!--<entry key="create_bank_card" value-ref="createBankCardHandler" />-->
+                <!--<entry key="modify_enterprise_info" value-ref="modifyEnterpriseInfoHandler" />-->
+                <!--<entry key="modify_mobile" value-ref="modifyMobileHandler" />-->
+                <!--<entry key="query_balance" value-ref="queryBalanceHandler" />-->
+                <!--<entry key="modify_personal_info" value-ref="modifyPersonalInfoHandler" />-->
+                <!-- 				<entry key="create_personal_member_merchant" value-ref="createPersonalMemberMerchantHandler" /> -->
+                <!-- 				<entry key="create_personal_merchant" value-ref="createMerchantHandler" /> -->
+                <!-- 				<entry key="unbundling_bank_card" value-ref="unbundlingBankCardHandler" /> -->
+                <!-- 				<entry key="query_cardbin" value-ref="queryCardbinHandler" /> -->
+                <!-- 				<entry key="binding_email" value-ref="bindingEmailHandler" /> -->
+                <!-- 				<entry key="update_bank_card" value-ref="updateBankCardHandler" /> -->
+                <!-- 				<entry key="update_account_freeze_status" value-ref="updateAccountStatusHandler" /> -->
+                <!-- 				<entry key="query_bank_card" value-ref="queryBankCardHandler" /> -->
+                <!-- 				<entry key="query_member_integrated_info" value-ref="queryueryMemberIntegratedInfoHandler" /> -->
+                <!-- 				<entry key="get_user_info" value-ref="getUserInfoHandler" /> -->
+              <!--  <entry key="open_account" value-ref="openAccountHandler" />
+                <entry key="member_binding" value-ref="memberBindingHandler" />
+                <entry key="member_unbinding" value-ref="unMemberBindingHandler" />
+                <entry key="modify_email" value-ref="modifyEmailHandler" />
+-->
+            </map>
+        </property>
+    </bean>
+
+</beans>
